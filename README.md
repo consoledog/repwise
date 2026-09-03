@@ -18,6 +18,7 @@ Set these environment variables in Vercel before deploying:
 ```text
 DATABASE_URL
 AUTH_SECRET
+AUTH_TRUST_HOST
 BLOB_READ_WRITE_TOKEN
 REPWISE_SEED_USER_1_EMAIL
 REPWISE_SEED_USER_1_NAME
@@ -27,9 +28,21 @@ REPWISE_SEED_USER_2_NAME
 REPWISE_SEED_USER_2_PASSWORD
 ```
 
-`DATABASE_URL` should point to the production PostgreSQL database, for example Neon or Supabase. `AUTH_SECRET` must be a long random secret. `BLOB_READ_WRITE_TOKEN` is created by Vercel Blob.
+`DATABASE_URL` should point to the production PostgreSQL database, for example Neon or Supabase. `AUTH_SECRET` must be a long random secret. Set `AUTH_TRUST_HOST` to `true` on Vercel. `BLOB_READ_WRITE_TOKEN` is created by Vercel Blob.
 
 The build script runs `prisma generate` before `next build` so clean Vercel builds do not depend on package postinstall scripts.
+
+Apply production migrations from a shell that has the production `DATABASE_URL`:
+
+```bash
+npm run prisma:deploy
+```
+
+Then create the configured private users:
+
+```bash
+npm run db:seed
+```
 
 ## Local Development
 

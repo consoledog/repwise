@@ -41,12 +41,26 @@ function getSeedUsers(): SeedUser[] {
   ]
 }
 
+function validateSeedUsers(users: SeedUser[]) {
+  for (const user of users) {
+    if (user.email.trim().toLowerCase() === 'x' || user.password === 'x') {
+      throw new Error('Seed user email and password must not use placeholder value "x".')
+    }
+
+    if (user.password.length < 8) {
+      throw new Error(`Seed password for ${user.email} must contain at least 8 characters.`)
+    }
+  }
+}
+
 async function main() {
   const users = getSeedUsers()
 
   if (users.length === 0) {
     throw new Error('No seed users configured.')
   }
+
+  validateSeedUsers(users)
 
   for (const user of users) {
     const passwordHash = await hashPassword(user.password)
