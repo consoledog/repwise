@@ -11,6 +11,26 @@ Repwise is a private workout tracking application for building workouts from an 
 - Vercel Blob for images.
 - Vercel Hobby Free for hosting.
 
+## Vercel Deployment
+
+Set these environment variables in Vercel before deploying:
+
+```text
+DATABASE_URL
+AUTH_SECRET
+BLOB_READ_WRITE_TOKEN
+REPWISE_SEED_USER_1_EMAIL
+REPWISE_SEED_USER_1_NAME
+REPWISE_SEED_USER_1_PASSWORD
+REPWISE_SEED_USER_2_EMAIL
+REPWISE_SEED_USER_2_NAME
+REPWISE_SEED_USER_2_PASSWORD
+```
+
+`DATABASE_URL` should point to the production PostgreSQL database, for example Neon or Supabase. `AUTH_SECRET` must be a long random secret. `BLOB_READ_WRITE_TOKEN` is created by Vercel Blob.
+
+The build script runs `prisma generate` before `next build` so clean Vercel builds do not depend on package postinstall scripts.
+
 ## Local Development
 
 Install dependencies:
@@ -144,6 +164,25 @@ Expected behavior:
 - The detail page shows category, source, description, optional image, and usage count.
 - `Edit` updates the exercise and returns to the detail page.
 - `Delete` asks for confirmation and removes unused exercises.
+
+## Phase 6 Upload Test
+
+Set `BLOB_READ_WRITE_TOKEN` in `.env.local` and `.env`, then restart the dev server.
+
+After logging in:
+
+```text
+http://localhost:3000/exercises/new
+```
+
+Expected behavior:
+
+- Selecting a JPG, PNG, or WebP image uploads it through `/api/uploads`.
+- Images larger than 4 MB are rejected.
+- The image is compressed in the browser when that makes the file smaller.
+- The uploaded Blob URL is saved with the exercise.
+- Replacing or removing an existing exercise image attempts to delete the old managed Blob.
+- Deleting an unused exercise attempts to delete its managed Blob image.
 
 ## Documentation
 

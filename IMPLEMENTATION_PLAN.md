@@ -234,21 +234,21 @@ Goal: upload and store exercise images and progress photos.
 
 ### Storage Files
 
-- [ ] Install Vercel Blob package.
-- [ ] Create `lib/storage/blob.ts`.
-- [ ] Create `lib/storage/image-validation.ts`.
-- [ ] Create `app/api/uploads/route.ts`.
-- [ ] Add `BLOB_READ_WRITE_TOKEN` to `.env.example`.
+- [x] Install Vercel Blob package.
+- [x] Create `lib/storage/blob.ts`.
+- [x] Create `lib/storage/image-validation.ts`.
+- [x] Create `app/api/uploads/route.ts`.
+- [x] Add `BLOB_READ_WRITE_TOKEN` to `.env.example`.
 
 ### Upload Rules
 
-- [ ] Restrict upload access to authenticated users.
-- [ ] Validate MIME type.
-- [ ] Validate file size.
-- [ ] Generate stable object names.
-- [ ] Store blob URL or key in PostgreSQL.
-- [ ] Add client-side image compression before upload.
-- [ ] Add delete flow for replaced images where possible.
+- [x] Restrict upload access to authenticated users.
+- [x] Validate MIME type.
+- [x] Validate file size.
+- [x] Generate stable object names.
+- [x] Store blob URL or key in PostgreSQL.
+- [x] Add client-side image compression before upload.
+- [x] Add delete flow for replaced images where possible.
 
 ## Phase 7: Workout Creation
 

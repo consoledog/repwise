@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import { Save } from 'lucide-react'
 import { exerciseCategoryOptions, type ExerciseFormValues } from '../types'
@@ -29,6 +32,7 @@ export function ExerciseForm({
     ...emptyValues,
     ...defaultValues,
   }
+  const [isUploadingImage, setIsUploadingImage] = useState(false)
 
   return (
     <form action={action} className="mobile-panel space-y-5 p-5">
@@ -86,7 +90,10 @@ export function ExerciseForm({
         />
       </div>
 
-      <ExerciseImageField defaultValue={values.imageBlobUrl} />
+      <ExerciseImageField
+        defaultValue={values.imageBlobUrl}
+        onUploadStateChange={setIsUploadingImage}
+      />
 
       {errorMessage ? (
         <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
@@ -98,9 +105,19 @@ export function ExerciseForm({
         <Link href={cancelHref} className="control-button control-button-secondary">
           Cancel
         </Link>
-        <button type="submit" className="control-button control-button-primary">
+        <button
+          type="submit"
+          className="control-button control-button-primary"
+          disabled={isUploadingImage}
+        >
           <Save size={17} aria-hidden="true" />
-          <span>{mode === 'create' ? 'Create exercise' : 'Save changes'}</span>
+          <span>
+            {isUploadingImage
+              ? 'Uploading...'
+              : mode === 'create'
+                ? 'Create exercise'
+                : 'Save changes'}
+          </span>
         </button>
       </div>
     </form>

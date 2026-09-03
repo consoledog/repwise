@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { notFound, redirect } from 'next/navigation'
 import { prisma } from '@/lib/db/prisma'
 import { getCurrentUserOrThrow } from '@/lib/auth/guards'
+import { deleteBlobIfManagedQuietly } from '@/lib/storage/blob'
 import { exerciseFormSchema, exerciseIdSchema } from './schemas'
 
 function readExerciseForm(formData: FormData) {
@@ -82,6 +83,7 @@ export async function updateExerciseAction(exerciseId: string, formData: FormDat
     },
     select: {
       id: true,
+      imageBlobUrl: true,
     },
   })
 
@@ -109,6 +111,10 @@ export async function updateExerciseAction(exerciseId: string, formData: FormDat
     throw error
   }
 
+  if (existingExercise.imageBlobUrl !== parsedExercise.data.imageBlobUrl) {
+    await deleteBlobIfManagedQuietly(existingExercise.imageBlobUrl)
+  }
+
   revalidatePath('/exercises')
   revalidatePath(`/exercises/${existingExercise.id}`)
   redirect(`/exercises/${existingExercise.id}`)
@@ -129,6 +135,7 @@ export async function deleteExerciseAction(exerciseId: string) {
     },
     select: {
       id: true,
+      imageBlobUrl: true,
       _count: {
         select: {
           workoutExercises: true,
@@ -150,6 +157,7 @@ export async function deleteExerciseAction(exerciseId: string) {
       id: exercise.id,
     },
   })
+  await deleteBlobIfManagedQuietly(exercise.imageBlobUrl)
 
   revalidatePath('/exercises')
   redirect('/exercises?deleted=1')
