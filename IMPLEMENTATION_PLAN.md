@@ -73,34 +73,35 @@ Goal: build the mobile-first shell before implementing domain features.
 
 ### Global Styling
 
-- [ ] Configure Tailwind CSS.
-- [ ] Define base colors, spacing, typography, and form styles in `app/globals.css`.
-- [ ] Add mobile-first layout constraints.
-- [ ] Add accessible focus states.
-- [ ] Add reusable button, input, card, and page section classes only if needed.
+- [x] Configure Tailwind CSS.
+- [x] Define base colors, spacing, typography, and form styles in `app/globals.css`.
+- [x] Add mobile-first layout constraints.
+- [x] Add accessible focus states.
+- [x] Add reusable button, input, card, and page section classes only if needed.
 
 ### Layout Components
 
-- [ ] Create `components/layout/AppShell.tsx`.
-- [ ] Create `components/layout/AppHeader.tsx`.
-- [ ] Create `components/layout/BottomNavigation.tsx`.
-- [ ] Create `components/layout/PageHeader.tsx`.
-- [ ] Create `components/layout/index.ts`.
+- [x] Create `components/layout/AppShell.tsx`.
+- [x] Create `components/layout/AppHeader.tsx`.
+- [x] Create `components/layout/BottomNavigation.tsx`.
+- [x] Create `components/layout/PageHeader.tsx`.
+- [x] Create `components/layout/index.ts`.
 
 ### Common Components
 
-- [ ] Create `components/common/LoadingState.tsx`.
-- [ ] Create `components/common/ErrorState.tsx`.
-- [ ] Create `components/common/EmptyState.tsx`.
-- [ ] Create `components/common/ConfirmDialog.tsx`.
-- [ ] Create `components/common/ImagePreview.tsx`.
-- [ ] Create `components/common/index.ts`.
+- [x] Create `components/common/LoadingState.tsx`.
+- [x] Create `components/common/ErrorState.tsx`.
+- [x] Create `components/common/EmptyState.tsx`.
+- [x] Create `components/common/ConfirmDialog.tsx`.
+- [x] Create `components/common/ImagePreview.tsx`.
+- [x] Create `components/common/index.ts`.
 
 ### App Routes
 
-- [ ] Create `app/(app)/layout.tsx`.
-- [ ] Create `app/(app)/dashboard/page.tsx`.
-- [ ] Redirect authenticated root users from `app/page.tsx` to `/dashboard`.
+- [x] Create `app/(app)/layout.tsx`.
+- [x] Create `app/(app)/dashboard/page.tsx`.
+- [x] Redirect root users from `app/page.tsx` based on authentication state.
+- [x] Create placeholder pages for `/exercises`, `/workouts`, `/workouts/new`, `/mesocycles`, and `/progress` so shell navigation does not hit 404 routes.
 
 ## Phase 3: Database and Prisma
 
@@ -108,47 +109,49 @@ Goal: define the database schema and local database workflow.
 
 ### Prisma Setup
 
-- [ ] Install `prisma` and `@prisma/client`.
-- [ ] Create `prisma/schema.prisma`.
-- [ ] Configure PostgreSQL datasource.
-- [ ] Configure Prisma client generator.
-- [ ] Create `lib/db/prisma.ts`.
-- [ ] Add `prisma:generate` script.
-- [ ] Add `prisma:migrate` script.
-- [ ] Add `prisma:studio` script.
+- [x] Install `prisma` and `@prisma/client`.
+- [x] Create `prisma/schema.prisma`.
+- [x] Configure PostgreSQL datasource.
+- [x] Configure Prisma client generator.
+- [x] Create `lib/db/prisma.ts`.
+- [x] Add `prisma:generate` script.
+- [x] Add `prisma:migrate` script.
+- [x] Add `prisma:studio` script.
+- [x] Create initial migration SQL file.
 
 ### Database Models
 
-- [ ] Add `User` model.
-- [ ] Add `Exercise` model.
-- [ ] Add `Workout` model.
-- [ ] Add `WorkoutExercise` model.
-- [ ] Add `WorkoutSet` model.
-- [ ] Add `Mesocycle` model.
-- [ ] Add `ProgressPhoto` model.
+- [x] Add `User` model.
+- [x] Add Auth.js support models: `Account`, `Session`, and `VerificationToken`.
+- [x] Add `Exercise` model.
+- [x] Add `Workout` model.
+- [x] Add `WorkoutExercise` model.
+- [x] Add `WorkoutSet` model.
+- [x] Add `Mesocycle` model.
+- [x] Add `ProgressPhoto` model.
 
 ### Database Enums
 
-- [ ] Add `ExerciseCategory` enum: `AEROBIC`, `ANAEROBIC`, `FLEXIBILITY`.
-- [ ] Add `WorkoutStatus` enum: `DRAFT`, `PLANNED`, `IN_PROGRESS`, `COMPLETED`.
-- [ ] Add `MesocycleStatus` enum: `PLANNED`, `ACTIVE`, `COMPLETED`.
-- [ ] Add `ProgressPhotoType` enum: `BEFORE`, `AFTER`.
-- [ ] Add `ExerciseSource` enum: `MANUAL`, `EXTERNAL`.
+- [x] Add `ExerciseCategory` enum: `AEROBIC`, `ANAEROBIC`, `FLEXIBILITY`.
+- [x] Add `WorkoutStatus` enum: `DRAFT`, `PLANNED`, `IN_PROGRESS`, `COMPLETED`.
+- [x] Add `MesocycleStatus` enum: `PLANNED`, `ACTIVE`, `COMPLETED`.
+- [x] Add `ProgressPhotoType` enum: `BEFORE`, `AFTER`.
+- [x] Add `ExerciseSource` enum: `MANUAL`, `EXTERNAL`.
 
 ### Database Constraints and Indexes
 
-- [ ] Add `userId` relation to user-owned tables.
-- [ ] Add indexes for common `userId` queries.
-- [ ] Add ordering support for workout exercises.
-- [ ] Add uniqueness constraints where needed.
-- [ ] Add cascade behavior deliberately for child records.
+- [x] Add `userId` relation to user-owned tables.
+- [x] Add indexes for common `userId` queries.
+- [x] Add ordering support for workout exercises.
+- [x] Add uniqueness constraints where needed.
+- [x] Add cascade behavior deliberately for child records.
 
 ### Local Database
 
-- [ ] Create `docker-compose.yml` for local PostgreSQL.
-- [ ] Document local database setup in `README.md`.
-- [ ] Run first local migration.
-- [ ] Verify Prisma Client generation.
+- [x] Create `docker-compose.yml` for local PostgreSQL.
+- [x] Document local database setup in `README.md`.
+- [x] Run first local migration.
+- [x] Verify Prisma Client generation.
 
 ## Phase 4: Authentication
 
@@ -156,38 +159,38 @@ Goal: support private access for the two intended users.
 
 ### Auth.js Setup
 
-- [ ] Install Auth.js dependencies.
-- [ ] Create `auth.ts`.
-- [ ] Create `app/api/auth/[...nextauth]/route.ts`.
-- [ ] Create `lib/auth/password.ts`.
-- [ ] Create `lib/auth/session.ts`.
-- [ ] Create `lib/auth/guards.ts`.
-- [ ] Configure `AUTH_SECRET`.
+- [x] Install Auth.js dependencies.
+- [x] Create `auth.ts`.
+- [x] Create `app/api/auth/[...nextauth]/route.ts`.
+- [x] Create `lib/auth/password.ts`.
+- [x] Create `lib/auth/session.ts`.
+- [x] Create `lib/auth/guards.ts`.
+- [x] Configure `AUTH_SECRET`.
 
 ### User Creation
 
-- [ ] Create `prisma/seed.ts`.
-- [ ] Add seed script to create initial allowed users.
-- [ ] Add password hashing in seed script.
-- [ ] Document how to create the two personal users.
-- [ ] Disable open public registration for MVP.
+- [x] Create `prisma/seed.ts`.
+- [x] Add seed script to create initial allowed users.
+- [x] Add password hashing in seed script.
+- [x] Document how to create the two personal users.
+- [x] Disable open public registration for MVP.
 
 ### Auth UI
 
-- [ ] Create `app/(auth)/login/page.tsx`.
-- [ ] Create `features/auth/components/LoginForm.tsx`.
-- [ ] Create `features/auth/actions.ts`.
-- [ ] Create `features/auth/schemas.ts`.
-- [ ] Create `features/auth/types.ts`.
-- [ ] Add logout action.
-- [ ] Add auth redirects for signed-in and signed-out users.
+- [x] Create `app/(auth)/login/page.tsx`.
+- [x] Create `features/auth/components/LoginForm.tsx`.
+- [x] Create `features/auth/actions.ts`.
+- [x] Create `features/auth/schemas.ts`.
+- [x] Create `features/auth/types.ts`.
+- [x] Add logout action.
+- [x] Add auth redirects for signed-in and signed-out users.
 
 ### Authorization
 
-- [ ] Protect `app/(app)/layout.tsx`.
-- [ ] Ensure every query filters by authenticated `userId`.
-- [ ] Ensure every mutation validates ownership.
-- [ ] Add server-side helper for `getCurrentUserOrThrow`.
+- [x] Protect `app/(app)/layout.tsx`.
+- [x] Establish authenticated `userId` helper for future queries.
+- [x] Establish authenticated `userId` helper for future mutations.
+- [x] Add server-side helper for `getCurrentUserOrThrow`.
 
 ## Phase 5: Exercise Database
 

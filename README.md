@@ -34,6 +34,99 @@ npm run test:run
 npm run build
 ```
 
+## Local Database
+
+Prisma CLI reads `.env`, while Next.js reads `.env.local`. Both files are ignored by Git and should contain the same local `DATABASE_URL`.
+
+Start PostgreSQL:
+
+```bash
+docker compose up -d postgres
+```
+
+Run the first migration:
+
+```bash
+npm run prisma:migrate -- --name init
+```
+
+Generate Prisma Client:
+
+```bash
+npm run prisma:generate
+```
+
+Seed local users:
+
+```bash
+npm run db:seed
+```
+
+Open Prisma Studio:
+
+```bash
+npm run prisma:studio
+```
+
+## Phase 3 Database Test
+
+After Docker Desktop is running, test the database setup with:
+
+```bash
+docker compose up -d postgres
+npm run prisma:validate
+npm run prisma:migrate
+npm run prisma:generate
+npm run prisma:status
+npm run db:seed
+```
+
+Then open Prisma Studio:
+
+```bash
+npm run prisma:studio
+```
+
+Expected result:
+
+- PostgreSQL container is healthy.
+- Prisma applies the initial migration.
+- Prisma Client generation succeeds.
+- Seed users are created.
+- Prisma Studio opens and shows the Repwise tables.
+
+Default local users are created only when seed env vars are not set and `NODE_ENV` is not `production`:
+
+```text
+owner@example.com / password123
+partner@example.com / password123
+```
+
+Use `REPWISE_SEED_USER_*` values in `.env` for real local credentials.
+
+## Phase 4 Auth Test
+
+After the database migration and seed are applied, start the app:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+Expected behavior:
+
+- `/` redirects to `/login` when signed out.
+- `/dashboard` redirects to `/login` when signed out.
+- Login with `owner@example.com / password123` works if default local seed users were created.
+- After login, the app redirects to `/dashboard`.
+- The header logout button signs the user out and returns to `/login`.
+- `/register` shows that public registration is closed.
+
 ## Documentation
 
 - `PROJECT_SPECIFICATION.md`
