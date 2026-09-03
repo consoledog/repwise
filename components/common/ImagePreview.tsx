@@ -1,14 +1,16 @@
 import Image from 'next/image'
+import { cn } from '@/lib/cn'
 
 type ImagePreviewProps = {
   src?: string | null
   alt: string
   label?: string
+  framed?: boolean
 }
 
-export function ImagePreview({ src, alt, label }: ImagePreviewProps) {
+export function ImagePreview({ src, alt, label, framed = true }: ImagePreviewProps) {
   return (
-    <div className="mobile-panel overflow-hidden">
+    <div className={cn('overflow-hidden', framed && 'mobile-panel')}>
       <div className="relative aspect-[4/3] bg-[var(--surface-subtle)]">
         {src ? (
           <Image

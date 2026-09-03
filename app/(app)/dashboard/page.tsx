@@ -3,19 +3,23 @@ import Link from 'next/link'
 import { Activity, Camera, Dumbbell, Library, Plus } from 'lucide-react'
 import { EmptyState } from '@/components/common'
 import { PageHeader } from '@/components/layout'
+import { getCurrentUserOrThrow } from '@/lib/auth/guards'
+import { getExerciseCountForUser } from '@/features/exercises/queries'
 
 export const metadata: Metadata = {
   title: 'Dashboard',
 }
 
-const summaryItems = [
-  { label: 'Exercises', value: '0', icon: Library, color: 'text-[var(--brand)]' },
-  { label: 'Workouts', value: '0', icon: Dumbbell, color: 'text-[var(--blue)]' },
-  { label: 'Mesocycles', value: '0', icon: Activity, color: 'text-[var(--amber)]' },
-  { label: 'Photos', value: '0', icon: Camera, color: 'text-zinc-700' },
-] as const
+export default async function DashboardPage() {
+  const user = await getCurrentUserOrThrow()
+  const exerciseCount = await getExerciseCountForUser(user.id)
+  const summaryItems = [
+    { label: 'Exercises', value: String(exerciseCount), icon: Library, color: 'text-[var(--brand)]' },
+    { label: 'Workouts', value: '0', icon: Dumbbell, color: 'text-[var(--blue)]' },
+    { label: 'Mesocycles', value: '0', icon: Activity, color: 'text-[var(--amber)]' },
+    { label: 'Photos', value: '0', icon: Camera, color: 'text-zinc-700' },
+  ] as const
 
-export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
@@ -72,7 +76,7 @@ export default function DashboardPage() {
               <div className="rounded-lg bg-emerald-50 p-4">
                 <p className="text-sm font-semibold text-[var(--brand-strong)]">Next step</p>
                 <p className="mt-1 text-sm leading-6 text-zinc-700">
-                  Phase 3 adds PostgreSQL and Prisma so this dashboard can load real data.
+                  Phase 5 adds exercise management so workouts can reuse your library.
                 </p>
               </div>
             </div>

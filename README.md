@@ -127,6 +127,24 @@ Expected behavior:
 - The header logout button signs the user out and returns to `/login`.
 - `/register` shows that public registration is closed.
 
+## Phase 5 Exercise Test
+
+After logging in, open:
+
+```text
+http://localhost:3000/exercises
+```
+
+Expected behavior:
+
+- The exercise list is scoped to the signed-in user.
+- `New exercise` opens the create form.
+- Creating an exercise redirects to its detail page.
+- The library page supports search and category filtering.
+- The detail page shows category, source, description, optional image, and usage count.
+- `Edit` updates the exercise and returns to the detail page.
+- `Delete` asks for confirmation and removes unused exercises.
+
 ## Documentation
 
 - `PROJECT_SPECIFICATION.md`

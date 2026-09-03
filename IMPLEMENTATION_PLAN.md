@@ -198,35 +198,35 @@ Goal: allow users to create and manage reusable exercises.
 
 ### Exercise Files
 
-- [ ] Create `features/exercises/schemas.ts`.
-- [ ] Create `features/exercises/types.ts`.
-- [ ] Create `features/exercises/queries.ts`.
-- [ ] Create `features/exercises/actions.ts`.
-- [ ] Create `features/exercises/components/ExerciseForm.tsx`.
-- [ ] Create `features/exercises/components/ExerciseList.tsx`.
-- [ ] Create `features/exercises/components/ExerciseCard.tsx`.
-- [ ] Create `features/exercises/components/ExerciseFilters.tsx`.
-- [ ] Create `features/exercises/components/ExerciseImageField.tsx`.
-- [ ] Create `features/exercises/components/index.ts`.
+- [x] Create `features/exercises/schemas.ts`.
+- [x] Create `features/exercises/types.ts`.
+- [x] Create `features/exercises/queries.ts`.
+- [x] Create `features/exercises/actions.ts`.
+- [x] Create `features/exercises/components/ExerciseForm.tsx`.
+- [x] Create `features/exercises/components/ExerciseList.tsx`.
+- [x] Create `features/exercises/components/ExerciseCard.tsx`.
+- [x] Create `features/exercises/components/ExerciseFilters.tsx`.
+- [x] Create `features/exercises/components/ExerciseImageField.tsx`.
+- [x] Create `features/exercises/components/index.ts`.
 
 ### Exercise Routes
 
-- [ ] Create `app/(app)/exercises/page.tsx`.
-- [ ] Create `app/(app)/exercises/new/page.tsx`.
-- [ ] Create `app/(app)/exercises/[exerciseId]/page.tsx`.
-- [ ] Create `app/(app)/exercises/[exerciseId]/edit/page.tsx`.
+- [x] Create `app/(app)/exercises/page.tsx`.
+- [x] Create `app/(app)/exercises/new/page.tsx`.
+- [x] Create `app/(app)/exercises/[exerciseId]/page.tsx`.
+- [x] Create `app/(app)/exercises/[exerciseId]/edit/page.tsx`.
 
 ### Exercise Features
 
-- [ ] List exercises for current user.
-- [ ] Create exercise.
-- [ ] Edit exercise.
-- [ ] Delete exercise.
-- [ ] Filter exercises by category.
-- [ ] Search exercises by name.
-- [ ] Support optional image.
-- [ ] Support exercise description.
-- [ ] Store exercise source as manual or external.
+- [x] List exercises for current user.
+- [x] Create exercise.
+- [x] Edit exercise.
+- [x] Delete exercise.
+- [x] Filter exercises by category.
+- [x] Search exercises by name.
+- [x] Support optional image.
+- [x] Support exercise description.
+- [x] Store exercise source as manual or external.
 
 ## Phase 6: File Uploads and Vercel Blob
 
