@@ -1,0 +1,499 @@
+# Repwise Implementation Plan
+
+## Purpose
+
+This document is the implementation checklist for Repwise. It should be updated continuously as features are implemented.
+
+Checkbox meaning:
+
+- `[ ]` Not started.
+- `[x]` Completed.
+
+The current product direction is a full-stack Next.js application hosted on Vercel Hobby Free, using PostgreSQL, Prisma, Auth.js, and Vercel Blob.
+
+## Phase 0: Documentation and Decisions
+
+- [x] Create `PROJECT_SPECIFICATION.md`.
+- [x] Create `SYSTEM_DESIGN.md`.
+- [x] Create `TECH_STACK.md`.
+- [x] Keep this implementation plan updated after each completed step.
+
+## Phase 1: Project Scaffold
+
+Goal: create the initial Next.js project structure and baseline developer workflow.
+
+### Root Files
+
+- [x] Create `package.json`.
+- [x] Create `package-lock.json`.
+- [x] Create `tsconfig.json`.
+- [x] Create `next.config.ts`.
+- [x] Create `postcss.config.mjs`.
+- [x] Create `eslint.config.mjs`.
+- [x] Create `vitest.config.ts`.
+- [x] Create `.prettierrc`.
+- [x] Create `.gitignore`.
+- [x] Create `.env.example`.
+- [x] Create `.env.local` locally and keep it untracked.
+- [x] Create `README.md` update for local development commands.
+
+### App Router Base
+
+- [x] Create `app/layout.tsx`.
+- [x] Create `app/page.tsx`.
+- [x] Create `app/globals.css`.
+- [x] Create `app/not-found.tsx`.
+- [x] Create `app/loading.tsx`.
+- [x] Create `app/error.tsx`.
+
+### Shared Structure
+
+- [x] Create `components/common/`.
+- [x] Create `components/layout/`.
+- [x] Create `components/ui/`.
+- [x] Create `features/`.
+- [x] Create `lib/`.
+- [x] Create `prisma/`.
+- [x] Create `tests/`.
+
+### Developer Commands
+
+- [x] Add `dev` script.
+- [x] Add `build` script.
+- [x] Add `start` script.
+- [x] Add `lint` script.
+- [x] Add `format` script.
+- [x] Add `type-check` script.
+- [x] Add `test` script.
+- [x] Add `test:run` script.
+
+## Phase 2: Styling, Layout, and App Shell
+
+Goal: build the mobile-first shell before implementing domain features.
+
+### Global Styling
+
+- [ ] Configure Tailwind CSS.
+- [ ] Define base colors, spacing, typography, and form styles in `app/globals.css`.
+- [ ] Add mobile-first layout constraints.
+- [ ] Add accessible focus states.
+- [ ] Add reusable button, input, card, and page section classes only if needed.
+
+### Layout Components
+
+- [ ] Create `components/layout/AppShell.tsx`.
+- [ ] Create `components/layout/AppHeader.tsx`.
+- [ ] Create `components/layout/BottomNavigation.tsx`.
+- [ ] Create `components/layout/PageHeader.tsx`.
+- [ ] Create `components/layout/index.ts`.
+
+### Common Components
+
+- [ ] Create `components/common/LoadingState.tsx`.
+- [ ] Create `components/common/ErrorState.tsx`.
+- [ ] Create `components/common/EmptyState.tsx`.
+- [ ] Create `components/common/ConfirmDialog.tsx`.
+- [ ] Create `components/common/ImagePreview.tsx`.
+- [ ] Create `components/common/index.ts`.
+
+### App Routes
+
+- [ ] Create `app/(app)/layout.tsx`.
+- [ ] Create `app/(app)/dashboard/page.tsx`.
+- [ ] Redirect authenticated root users from `app/page.tsx` to `/dashboard`.
+
+## Phase 3: Database and Prisma
+
+Goal: define the database schema and local database workflow.
+
+### Prisma Setup
+
+- [ ] Install `prisma` and `@prisma/client`.
+- [ ] Create `prisma/schema.prisma`.
+- [ ] Configure PostgreSQL datasource.
+- [ ] Configure Prisma client generator.
+- [ ] Create `lib/db/prisma.ts`.
+- [ ] Add `prisma:generate` script.
+- [ ] Add `prisma:migrate` script.
+- [ ] Add `prisma:studio` script.
+
+### Database Models
+
+- [ ] Add `User` model.
+- [ ] Add `Exercise` model.
+- [ ] Add `Workout` model.
+- [ ] Add `WorkoutExercise` model.
+- [ ] Add `WorkoutSet` model.
+- [ ] Add `Mesocycle` model.
+- [ ] Add `ProgressPhoto` model.
+
+### Database Enums
+
+- [ ] Add `ExerciseCategory` enum: `AEROBIC`, `ANAEROBIC`, `FLEXIBILITY`.
+- [ ] Add `WorkoutStatus` enum: `DRAFT`, `PLANNED`, `IN_PROGRESS`, `COMPLETED`.
+- [ ] Add `MesocycleStatus` enum: `PLANNED`, `ACTIVE`, `COMPLETED`.
+- [ ] Add `ProgressPhotoType` enum: `BEFORE`, `AFTER`.
+- [ ] Add `ExerciseSource` enum: `MANUAL`, `EXTERNAL`.
+
+### Database Constraints and Indexes
+
+- [ ] Add `userId` relation to user-owned tables.
+- [ ] Add indexes for common `userId` queries.
+- [ ] Add ordering support for workout exercises.
+- [ ] Add uniqueness constraints where needed.
+- [ ] Add cascade behavior deliberately for child records.
+
+### Local Database
+
+- [ ] Create `docker-compose.yml` for local PostgreSQL.
+- [ ] Document local database setup in `README.md`.
+- [ ] Run first local migration.
+- [ ] Verify Prisma Client generation.
+
+## Phase 4: Authentication
+
+Goal: support private access for the two intended users.
+
+### Auth.js Setup
+
+- [ ] Install Auth.js dependencies.
+- [ ] Create `auth.ts`.
+- [ ] Create `app/api/auth/[...nextauth]/route.ts`.
+- [ ] Create `lib/auth/password.ts`.
+- [ ] Create `lib/auth/session.ts`.
+- [ ] Create `lib/auth/guards.ts`.
+- [ ] Configure `AUTH_SECRET`.
+
+### User Creation
+
+- [ ] Create `prisma/seed.ts`.
+- [ ] Add seed script to create initial allowed users.
+- [ ] Add password hashing in seed script.
+- [ ] Document how to create the two personal users.
+- [ ] Disable open public registration for MVP.
+
+### Auth UI
+
+- [ ] Create `app/(auth)/login/page.tsx`.
+- [ ] Create `features/auth/components/LoginForm.tsx`.
+- [ ] Create `features/auth/actions.ts`.
+- [ ] Create `features/auth/schemas.ts`.
+- [ ] Create `features/auth/types.ts`.
+- [ ] Add logout action.
+- [ ] Add auth redirects for signed-in and signed-out users.
+
+### Authorization
+
+- [ ] Protect `app/(app)/layout.tsx`.
+- [ ] Ensure every query filters by authenticated `userId`.
+- [ ] Ensure every mutation validates ownership.
+- [ ] Add server-side helper for `getCurrentUserOrThrow`.
+
+## Phase 5: Exercise Database
+
+Goal: allow users to create and manage reusable exercises.
+
+### Exercise Files
+
+- [ ] Create `features/exercises/schemas.ts`.
+- [ ] Create `features/exercises/types.ts`.
+- [ ] Create `features/exercises/queries.ts`.
+- [ ] Create `features/exercises/actions.ts`.
+- [ ] Create `features/exercises/components/ExerciseForm.tsx`.
+- [ ] Create `features/exercises/components/ExerciseList.tsx`.
+- [ ] Create `features/exercises/components/ExerciseCard.tsx`.
+- [ ] Create `features/exercises/components/ExerciseFilters.tsx`.
+- [ ] Create `features/exercises/components/ExerciseImageField.tsx`.
+- [ ] Create `features/exercises/components/index.ts`.
+
+### Exercise Routes
+
+- [ ] Create `app/(app)/exercises/page.tsx`.
+- [ ] Create `app/(app)/exercises/new/page.tsx`.
+- [ ] Create `app/(app)/exercises/[exerciseId]/page.tsx`.
+- [ ] Create `app/(app)/exercises/[exerciseId]/edit/page.tsx`.
+
+### Exercise Features
+
+- [ ] List exercises for current user.
+- [ ] Create exercise.
+- [ ] Edit exercise.
+- [ ] Delete exercise.
+- [ ] Filter exercises by category.
+- [ ] Search exercises by name.
+- [ ] Support optional image.
+- [ ] Support exercise description.
+- [ ] Store exercise source as manual or external.
+
+## Phase 6: File Uploads and Vercel Blob
+
+Goal: upload and store exercise images and progress photos.
+
+### Storage Files
+
+- [ ] Install Vercel Blob package.
+- [ ] Create `lib/storage/blob.ts`.
+- [ ] Create `lib/storage/image-validation.ts`.
+- [ ] Create `app/api/uploads/route.ts`.
+- [ ] Add `BLOB_READ_WRITE_TOKEN` to `.env.example`.
+
+### Upload Rules
+
+- [ ] Restrict upload access to authenticated users.
+- [ ] Validate MIME type.
+- [ ] Validate file size.
+- [ ] Generate stable object names.
+- [ ] Store blob URL or key in PostgreSQL.
+- [ ] Add client-side image compression before upload.
+- [ ] Add delete flow for replaced images where possible.
+
+## Phase 7: Workout Creation
+
+Goal: allow users to build workouts from existing exercises.
+
+### Workout Files
+
+- [ ] Create `features/workouts/schemas.ts`.
+- [ ] Create `features/workouts/types.ts`.
+- [ ] Create `features/workouts/queries.ts`.
+- [ ] Create `features/workouts/actions.ts`.
+- [ ] Create `features/workouts/components/WorkoutForm.tsx`.
+- [ ] Create `features/workouts/components/ExercisePicker.tsx`.
+- [ ] Create `features/workouts/components/WorkoutExerciseEditor.tsx`.
+- [ ] Create `features/workouts/components/WorkoutSetTargetEditor.tsx`.
+- [ ] Create `features/workouts/components/WorkoutList.tsx`.
+- [ ] Create `features/workouts/components/WorkoutCard.tsx`.
+- [ ] Create `features/workouts/components/index.ts`.
+
+### Workout Routes
+
+- [ ] Create `app/(app)/workouts/page.tsx`.
+- [ ] Create `app/(app)/workouts/new/page.tsx`.
+- [ ] Create `app/(app)/workouts/[workoutId]/page.tsx`.
+- [ ] Create `app/(app)/workouts/[workoutId]/edit/page.tsx`.
+
+### Workout Features
+
+- [ ] Create workout.
+- [ ] Add exercises to workout.
+- [ ] Reorder workout exercises.
+- [ ] Define target sets.
+- [ ] Define target repetitions.
+- [ ] Define target weight.
+- [ ] Save workout as draft.
+- [ ] Schedule workout.
+- [ ] Assign workout to mesocycle optionally.
+
+## Phase 8: Active Workout Tracking
+
+Goal: make workout tracking fast during training.
+
+### Active Workout Files
+
+- [ ] Create `features/workouts/components/ActiveWorkout.tsx`.
+- [ ] Create `features/workouts/components/ActiveExercise.tsx`.
+- [ ] Create `features/workouts/components/SetTracker.tsx`.
+- [ ] Create `features/workouts/components/WeightInput.tsx`.
+- [ ] Create `features/workouts/components/RepetitionInput.tsx`.
+- [ ] Create `features/workouts/components/WorkoutCompletionDialog.tsx`.
+- [ ] Create `features/workouts/stores/activeWorkoutStore.ts`.
+
+### Active Workout Routes
+
+- [ ] Create `app/(app)/workouts/[workoutId]/track/page.tsx`.
+
+### Active Workout Features
+
+- [ ] Start workout.
+- [ ] Mark workout as in progress.
+- [ ] Record repetitions per set.
+- [ ] Record weight per set.
+- [ ] Mark individual sets complete.
+- [ ] Add extra set during workout.
+- [ ] Remove unneeded set during workout.
+- [ ] Save partial progress.
+- [ ] Complete workout.
+- [ ] Preserve completed workout history.
+
+## Phase 9: Mesocycle Management
+
+Goal: group workouts into a larger training block.
+
+### Mesocycle Files
+
+- [ ] Create `features/mesocycles/schemas.ts`.
+- [ ] Create `features/mesocycles/types.ts`.
+- [ ] Create `features/mesocycles/queries.ts`.
+- [ ] Create `features/mesocycles/actions.ts`.
+- [ ] Create `features/mesocycles/components/MesocycleForm.tsx`.
+- [ ] Create `features/mesocycles/components/MesocycleList.tsx`.
+- [ ] Create `features/mesocycles/components/MesocycleCard.tsx`.
+- [ ] Create `features/mesocycles/components/MesocycleProgress.tsx`.
+- [ ] Create `features/mesocycles/components/MesocycleWorkoutList.tsx`.
+- [ ] Create `features/mesocycles/components/index.ts`.
+
+### Mesocycle Routes
+
+- [ ] Create `app/(app)/mesocycles/page.tsx`.
+- [ ] Create `app/(app)/mesocycles/new/page.tsx`.
+- [ ] Create `app/(app)/mesocycles/[mesocycleId]/page.tsx`.
+- [ ] Create `app/(app)/mesocycles/[mesocycleId]/edit/page.tsx`.
+
+### Mesocycle Features
+
+- [ ] Create mesocycle.
+- [ ] Set planned workout count, for example 10.
+- [ ] Add workouts to mesocycle.
+- [ ] Show completed workout count.
+- [ ] Show mesocycle progress percentage.
+- [ ] Complete mesocycle.
+- [ ] Edit mesocycle notes.
+
+## Phase 10: Progress Photos
+
+Goal: attach before and after body photos to mesocycles.
+
+### Progress Photo Files
+
+- [ ] Create `features/progress-photos/schemas.ts`.
+- [ ] Create `features/progress-photos/types.ts`.
+- [ ] Create `features/progress-photos/queries.ts`.
+- [ ] Create `features/progress-photos/actions.ts`.
+- [ ] Create `features/progress-photos/components/ProgressPhotoUploader.tsx`.
+- [ ] Create `features/progress-photos/components/ProgressPhotoGrid.tsx`.
+- [ ] Create `features/progress-photos/components/BeforeAfterComparison.tsx`.
+- [ ] Create `features/progress-photos/components/index.ts`.
+
+### Progress Photo Features
+
+- [ ] Upload before photo.
+- [ ] Upload after photo.
+- [ ] Associate photo with mesocycle.
+- [ ] Preview uploaded photos.
+- [ ] Delete uploaded photo.
+- [ ] Compare before and after photos.
+- [ ] Enforce user ownership.
+
+## Phase 11: Dashboard and History
+
+Goal: provide a useful first screen after login.
+
+### Dashboard Files
+
+- [ ] Create `features/dashboard/queries.ts`.
+- [ ] Create `features/dashboard/components/DashboardSummary.tsx`.
+- [ ] Create `features/dashboard/components/CurrentMesocycleCard.tsx`.
+- [ ] Create `features/dashboard/components/RecentWorkouts.tsx`.
+- [ ] Create `features/dashboard/components/QuickActions.tsx`.
+- [ ] Create `features/dashboard/components/index.ts`.
+
+### Dashboard Features
+
+- [ ] Show current active mesocycle.
+- [ ] Show next planned workout.
+- [ ] Show recent completed workouts.
+- [ ] Show quick action to create exercise.
+- [ ] Show quick action to create workout.
+- [ ] Show quick action to start workout.
+
+## Phase 12: Tests
+
+Goal: add enough tests to protect critical behavior.
+
+### Unit and Component Tests
+
+- [ ] Configure Vitest.
+- [ ] Configure React Testing Library.
+- [ ] Configure MSW if route handlers or external calls need mocking.
+- [ ] Add test setup file.
+- [ ] Test login form validation.
+- [ ] Test exercise form validation.
+- [ ] Test workout set input behavior.
+- [ ] Test mesocycle progress calculation.
+
+### Backend Logic Tests
+
+- [ ] Test auth guard helpers.
+- [ ] Test user ownership checks.
+- [ ] Test exercise actions.
+- [ ] Test workout actions.
+- [ ] Test mesocycle actions.
+
+### End-to-End Tests
+
+- [ ] Add Playwright later if needed.
+- [ ] Test login flow.
+- [ ] Test create exercise flow.
+- [ ] Test create and complete workout flow.
+- [ ] Test create mesocycle and upload progress photo flow.
+
+## Phase 13: CI/CD and Deployment
+
+Goal: make validation and deployment repeatable.
+
+### GitHub and Vercel
+
+- [ ] Connect repository to Vercel.
+- [ ] Configure Vercel project.
+- [ ] Configure production environment variables.
+- [ ] Configure preview environment variables.
+- [ ] Connect Neon database.
+- [ ] Connect Vercel Blob.
+
+### GitHub Actions
+
+- [ ] Create `.github/workflows/ci.yml`.
+- [ ] Run `npm ci`.
+- [ ] Run `npm run type-check`.
+- [ ] Run `npm run lint`.
+- [ ] Run `npm run test:run`.
+- [ ] Run `npm run build`.
+- [ ] Add Prisma validation.
+
+### Deployment Validation
+
+- [ ] Verify preview deployment.
+- [ ] Verify production deployment.
+- [ ] Verify login in production.
+- [ ] Verify database connection in production.
+- [ ] Verify image upload in production.
+
+## Phase 14: PWA and Mobile Polish
+
+Goal: make the web app feel good on phones.
+
+- [ ] Add manifest.
+- [ ] Add app icons.
+- [ ] Add mobile viewport metadata.
+- [ ] Add installable app behavior.
+- [ ] Improve touch targets.
+- [ ] Test on phone viewport.
+- [ ] Test active workout screen on phone.
+- [ ] Add offline draft support for active workouts.
+
+## Phase 15: MVP Completion Checklist
+
+The MVP is complete when:
+
+- [ ] User can log in.
+- [ ] User can create exercises.
+- [ ] User can optionally attach exercise image.
+- [ ] User can create workout from exercises.
+- [ ] User can enter sets, repetitions, and weight.
+- [ ] User can complete workout.
+- [ ] User can view workout history.
+- [ ] User can create mesocycle with planned workout count.
+- [ ] User can attach before progress photo to mesocycle.
+- [ ] User can attach after progress photo to mesocycle.
+- [ ] User can view mesocycle progress.
+- [ ] User data is private and scoped by authenticated user.
+- [ ] App is deployed on Vercel.
+- [ ] Database runs on Neon Free or equivalent free PostgreSQL provider.
+- [ ] Image uploads work through Vercel Blob or selected storage provider.
+
+## Update Rules
+
+- Check off items only after they are implemented and verified.
+- If a planned file changes name, update this document.
+- If a feature is intentionally deferred, move it to a later phase instead of deleting it.
+- Keep implementation details aligned with `PROJECT_SPECIFICATION.md`, `SYSTEM_DESIGN.md`, and `TECH_STACK.md`.
