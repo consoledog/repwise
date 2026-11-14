@@ -1,20 +1,24 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
-import { EmptyState } from '@/components/common'
 import { PageHeader } from '@/components/layout'
+import { getCurrentUserOrThrow } from '@/lib/auth/guards'
+import { listWorkoutsForUser } from '@/features/workouts/queries'
+import { WorkoutList } from '@/features/workouts/components'
 
 export const metadata: Metadata = {
   title: 'Workouts',
 }
 
-export default function WorkoutsPage() {
+export default async function WorkoutsPage() {
+  const user = await getCurrentUserOrThrow()
+  const workouts = await listWorkoutsForUser(user.id)
   return (
     <div className="space-y-6">
       <PageHeader
         eyebrow="Workout tracking"
         title="Workouts"
-        description="Workout creation and history will be connected after exercises and database storage are ready."
+        description="Plan your sessions, set exercise targets, and organize your workouts."
         actions={
           <Link href="/workouts/new" className="control-button control-button-primary">
             <Plus size={18} aria-hidden="true" />
@@ -22,10 +26,7 @@ export default function WorkoutsPage() {
           </Link>
         }
       />
-      <EmptyState
-        title="No workouts yet"
-        description="Phase 7 will add workout creation from existing exercises, target sets, repetitions, and weights."
-      />
+      <WorkoutList workouts={workouts} />
     </div>
   )
 }

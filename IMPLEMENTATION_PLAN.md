@@ -256,36 +256,44 @@ Goal: allow users to build workouts from existing exercises.
 
 ### Workout Files
 
-- [ ] Create `features/workouts/schemas.ts`.
-- [ ] Create `features/workouts/types.ts`.
-- [ ] Create `features/workouts/queries.ts`.
-- [ ] Create `features/workouts/actions.ts`.
-- [ ] Create `features/workouts/components/WorkoutForm.tsx`.
-- [ ] Create `features/workouts/components/ExercisePicker.tsx`.
-- [ ] Create `features/workouts/components/WorkoutExerciseEditor.tsx`.
-- [ ] Create `features/workouts/components/WorkoutSetTargetEditor.tsx`.
-- [ ] Create `features/workouts/components/WorkoutList.tsx`.
-- [ ] Create `features/workouts/components/WorkoutCard.tsx`.
-- [ ] Create `features/workouts/components/index.ts`.
+- [x] Create `features/workouts/schemas.ts`.
+- [x] Create `features/workouts/types.ts`.
+- [x] Create `features/workouts/queries.ts`.
+- [x] Create `features/workouts/actions.ts`.
+- [x] Create `features/workouts/mutations.ts` for atomic ownership-checked persistence.
+- [x] Create `features/workouts/components/WorkoutForm.tsx`.
+- [x] Create `features/workouts/components/ExercisePicker.tsx`.
+- [x] Create `features/workouts/components/WorkoutExerciseEditor.tsx`.
+- [x] Create `features/workouts/components/WorkoutSetTargetEditor.tsx`.
+- [x] Create `features/workouts/components/WorkoutList.tsx`.
+- [x] Create `features/workouts/components/WorkoutCard.tsx`.
+- [x] Create `features/workouts/components/index.ts`.
 
 ### Workout Routes
 
-- [ ] Create `app/(app)/workouts/page.tsx`.
-- [ ] Create `app/(app)/workouts/new/page.tsx`.
-- [ ] Create `app/(app)/workouts/[workoutId]/page.tsx`.
-- [ ] Create `app/(app)/workouts/[workoutId]/edit/page.tsx`.
+- [x] Create `app/(app)/workouts/page.tsx`.
+- [x] Create `app/(app)/workouts/new/page.tsx`.
+- [x] Create `app/(app)/workouts/[workoutId]/page.tsx`.
+- [x] Create `app/(app)/workouts/[workoutId]/edit/page.tsx`.
 
 ### Workout Features
 
-- [ ] Create workout.
-- [ ] Add exercises to workout.
-- [ ] Reorder workout exercises.
-- [ ] Define target sets.
-- [ ] Define target repetitions.
-- [ ] Define target weight.
-- [ ] Save workout as draft.
-- [ ] Schedule workout.
-- [ ] Assign workout to mesocycle optionally.
+- [x] Create workout.
+- [x] Add exercises to workout.
+- [x] Reorder workout exercises.
+- [x] Define target sets.
+- [x] Define target repetitions.
+- [x] Define target weight.
+- [x] Save workout as draft.
+- [x] Schedule workout.
+- [x] Assign workout to mesocycle optionally.
+
+### Verification
+
+- [x] Verify schema and Server Action validation, authentication, and form interactions.
+- [x] Verify PostgreSQL persistence, exercise order, scheduling, mesocycle ownership, and protection of recorded sets with local integration tests.
+- [x] Run type checking, lint, tests, and a production build.
+- [x] Document manual testing and the opt-in local database tests in `README.md`.
 
 ## Phase 8: Active Workout Tracking
 
@@ -419,7 +427,7 @@ Goal: add enough tests to protect critical behavior.
 - [ ] Test auth guard helpers.
 - [ ] Test user ownership checks.
 - [ ] Test exercise actions.
-- [ ] Test workout actions.
+- [x] Test workout actions.
 - [ ] Test mesocycle actions.
 
 ### End-to-End Tests

@@ -5,6 +5,7 @@ import { EmptyState } from '@/components/common'
 import { PageHeader } from '@/components/layout'
 import { getCurrentUserOrThrow } from '@/lib/auth/guards'
 import { getExerciseCountForUser } from '@/features/exercises/queries'
+import { getWorkoutCountForUser } from '@/features/workouts/queries'
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -12,10 +13,18 @@ export const metadata: Metadata = {
 
 export default async function DashboardPage() {
   const user = await getCurrentUserOrThrow()
-  const exerciseCount = await getExerciseCountForUser(user.id)
+  const [exerciseCount, workoutCount] = await Promise.all([
+    getExerciseCountForUser(user.id),
+    getWorkoutCountForUser(user.id),
+  ])
   const summaryItems = [
-    { label: 'Exercises', value: String(exerciseCount), icon: Library, color: 'text-[var(--brand)]' },
-    { label: 'Workouts', value: '0', icon: Dumbbell, color: 'text-[var(--blue)]' },
+    {
+      label: 'Exercises',
+      value: String(exerciseCount),
+      icon: Library,
+      color: 'text-[var(--brand)]',
+    },
+    { label: 'Workouts', value: String(workoutCount), icon: Dumbbell, color: 'text-[var(--blue)]' },
     { label: 'Mesocycles', value: '0', icon: Activity, color: 'text-[var(--amber)]' },
     { label: 'Photos', value: '0', icon: Camera, color: 'text-zinc-700' },
   ] as const
@@ -53,12 +62,12 @@ export default async function DashboardPage() {
       <section className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">
           <EmptyState
-            title="No workout planned"
-            description="Create your first workout after adding a few exercises to the library."
+            title={workoutCount > 0 ? 'Your workouts' : 'Plan your first workout'}
+            description="Build and review sessions using exercises from your library."
             action={
-              <Link href="/exercises" className="control-button control-button-secondary">
-                <Library size={17} aria-hidden="true" />
-                <span>Open library</span>
+              <Link href="/workouts" className="control-button control-button-secondary">
+                <Dumbbell size={17} aria-hidden="true" />
+                <span>Open workouts</span>
               </Link>
             }
           />
@@ -69,14 +78,14 @@ export default async function DashboardPage() {
               <div className="rounded-lg bg-[var(--surface-subtle)] p-4">
                 <p className="text-sm font-semibold text-zinc-950">Active workout</p>
                 <p className="mt-1 text-sm leading-6 text-zinc-600">
-                  The tracking screen will show set-by-set inputs once workout creation is
-                  available.
+                  Plan your exercise order and targets before training. Live set tracking is coming
+                  next.
                 </p>
               </div>
               <div className="rounded-lg bg-emerald-50 p-4">
                 <p className="text-sm font-semibold text-[var(--brand-strong)]">Next step</p>
                 <p className="mt-1 text-sm leading-6 text-zinc-700">
-                  Phase 5 adds exercise management so workouts can reuse your library.
+                  Save a workout as a draft or choose a date and schedule your session.
                 </p>
               </div>
             </div>

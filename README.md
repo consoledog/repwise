@@ -197,6 +197,33 @@ Expected behavior:
 - Replacing or removing an existing exercise image attempts to delete the old managed Blob.
 - Deleting an unused exercise attempts to delete its managed Blob image.
 
+## Phase 7 Workout Test
+
+After logging in, open `/workouts` and select `New workout`.
+
+Expected behavior:
+
+- Name the workout, optionally add notes, and choose Draft or Planned.
+- Planned workouts require a valid scheduled date; drafts can be saved without a date.
+- Search the exercise picker by name and filter by category.
+- Add exercises from your own library, set their order, and enter target sets, repetitions, and weight in kilograms.
+- Repetitions and weight can be left empty for cardio and mobility work.
+- Optionally assign an existing mesocycle owned by the signed-in user. Mesocycle creation will be added in Phase 9.
+- Save to open the workout detail page, then use `Edit` to change the plan.
+- Validation failures preserve the entered values.
+- Workouts and selectable exercises/mesocycles are private to each account.
+- Planning edits are locked once a workout has started or contains recorded sets.
+- The dashboard workout count reflects saved workouts. Live set tracking is part of Phase 8.
+
+Workout schema, form interaction, and Server Action tests run with `npm run test:run`.
+Database integration tests are opt-in and require the migrated local Docker database:
+
+```bash
+TEST_DATABASE_URL='postgresql://postgres:postgres@localhost:5432/repwise?schema=public' npm run test:run -- tests/workouts/database.test.ts
+```
+
+These tests accept only a local database URL, create isolated fixture users, and clean up their data afterward. They cover persistence, ordering, scheduling, ownership, and preservation of recorded workout sets.
+
 ## Documentation
 
 - `PROJECT_SPECIFICATION.md`
